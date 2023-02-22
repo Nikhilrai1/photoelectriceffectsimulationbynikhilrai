@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photoelectric Effect</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/output.css">
+</head>
+<style>
+  .intensity, .voltage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 5px;
+    margin-bottom: 20px;
+    background: #d6d0d0;
+    border-radius: 10px;
+  }
+  #intensitySlider, #voltageSlider{
+    width: 400px;
+  }
+  .right{
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: fit-content;
+    background: #4a4646;
+    border-radius: 10px;
+    margin-left: 30px;
+  }
+.left{
+  flex: 1;
+  margin-right: 30px;
+}
+
+#simulation{
+  border: 1px solid black;
+  background: #8888888e;
+}
+
+
+</style>
+<body>
+
+  <nav class="p-[10px] bg-purple-700 flex items-center justify-center flex-col">
+    <h1 class="font-sans text-3xl text-white text-center">Photoelectric Effect Simulation</h1>
+    <p class="text-white">(Modern Physics)</p>
+    <p class="text-white">Herald Science Project</p>
+  </nav>
+
+  <article class="p-7">
+   <p class="ml-10 mr-10">
+    The photoelectric effect is the emission of electrons when electromagnetic radiation, such as light, hits a material. Electrons emitted in this manner are called photoelectrons. The phenomenon is studied in condensed matter physics, and solid state and quantum chemistry to draw inferences about the properties of atoms, molecules and solids. The effect has found use in electronic devices specialized for light detection and precisely timed electron emission.
+   </p>
+  </article>
+  
+  <div class="simulation flex items-center justify-between p-[20px]">
+    <!-- left -->
+    <section class="left">
+      <canvas id="simulation" width="1000" height="600" ></canvas>
+    </section>
+    
+    <!-- right -->
+    <section class="right">
+      <!-- wavelength -->
+        <div class="wavelength">
+          <span>wavelength</span>
+          <div class="box">
+            <canvas id="wavelengthCanvas" width="400" height="50"></canvas>
+            <input id="slider" type="range" min="380" max="780" value="380">
+          </div>
+          <span id="bubble">380nm</span>
+        </div>
+         <!-- intensity -->
+         <div class="intensity">
+          <span>Intensity</span>
+            <input id="intensitySlider" type="range" min="80" max="100" value="0">
+          <span id="intensityDiv">0%</span>
+        </div>
+  
+         <!-- Energy supplied -->
+         <div class="metalAndFrequency flex items-center justify-between">
+          <div class="frequency flex flex-col items-center justify-center mb-7 w-full">
+            <label class="text-white" for="Frequency">Energy supplied (ev)</label>
+            <input id="energy" type="text" class="w-[185px] h-7 ml-[15px] pl-3 pr-3" type="text">
+          </div>
+        </div>
+       
+  
+          <!-- Potential difference -->
+          <div class="voltage">
+            <span>Potential differece</span>
+              <input id="voltageSlider" type="range" value="0" min="-5" max="5">
+            <span id="voltageDiv">0V</span>
+          </div>
+  
+        <!-- metals & frequency -->
+        <div class="metalAndFrequency flex items-center justify-between">
+          <div class="metals  flex flex-col items-center justify-center mb-7">
+            <label class="text-white" for="metals">Target Metal</label>
+            <select id="metals" class="w-[185px] h-7 mr-[15px] pl-3" value="2.12" name="metals" >
+              <option value="2.12">Cesium (2.12ev)</option>
+            </select>
+          </div>
+          <div class="frequency flex flex-col items-center justify-center mb-7">
+            <label class="text-white" for="Frequency">Frequency (Hz)</label>
+            <input id="frequency" type="text" class="w-[185px] h-7 ml-[15px] pl-3 pr-3" type="text">
+          </div>
+        </div>
+  
+        <!-- Threshold wavelength & Threshold Frequency -->
+        <div class="flex items-center justify-between">
+          <div class="metals  flex flex-col items-center justify-center mb-7">
+            <label class="text-white text-sm" for="metals">Threshold Wavelength (m)</label>
+            <input disabled="true"  class="w-[185px] h-7 mr-[15px] pl-3 bg-white" name="metals" id="thresholdWavelength">
+          </div>
+          <div class="frequency flex flex-col items-center justify-center mb-7">
+            <label class="text-white text-sm" for="Frequency">Threshold Frequency (Hz)</label>
+            <input disabled="true" id="thresholdFrequency" type="text" class="w-[185px] h-7 ml-[15px]  pr-3 pl-3 bg-white">
+          </div>
+        </div>
+  
+        <!-- Kinetic Energy & stopping potential -->
+        <div class="flex items-center justify-between">
+          <div class="metals  flex flex-col items-center justify-center mb-7">
+            <label class="text-white text-sm" for="metals">Kinetic Energy (Joule)</label>
+            <input disabled="true"  class="w-[185px] h-7 mr-[15px] pl-3 bg-white" name="metals" id="kineticEnergy">
+          </div>
+          <div class="frequency flex flex-col items-center justify-center mb-7">
+            <label class="text-white text-sm" for="Frequency">Stopping Potential (Vo)</label>
+            <input disabled="true" id="stoppingPotetial" type="text" class="w-[185px] h-7 ml-[15px]  pr-3 pl-3 bg-white">
+          </div>
+        </div>
+        
+  
+          <!-- Photo current && Velocity -->
+          <div class="flex items-center justify-between">
+            <div class="metals  flex flex-col items-center justify-center mb-7">
+              <label class="text-white text-sm" for="metals">Photo Current (Amp)</label>
+              <input disabled="true"  class="w-[185px] h-7 mr-[15px] pl-3 bg-white" name="metals" id="photoCurrent">
+            </div>
+            <div class="frequency flex flex-col items-center justify-center mb-7">
+              <label class="text-white text-sm" for="Frequency">Velocity (m/s) (electron)</label>
+              <input disabled="true" id="electronVelocity" type="text" class="w-[185px] h-7 ml-[15px]  pr-3 pl-3 bg-white">
+            </div>
+          </div>
+  
+          
+         
+      </section>
+  </div>
+    <script src="./js/constants.js"></script>
+    <script src="./js/utils/data.js"></script>
+    <script src="./js/utils/utilityFunctions.js"></script>
+    <script src="./js/wavelength.js"></script>
+    <script src="./js/simulation.js"></script>
+    <script src="./js/controllers.js"></script>
+
+</body>
+</html>
+
+
